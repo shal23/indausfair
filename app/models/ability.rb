@@ -3,8 +3,28 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
+    alias_action :destroy, :edit, :to => :modify
+    alias_action :modify, :to => :manage
+
     if user.has_role? :admin
       can :manage, :all
+
+       elsif user.has_role? :user
+           # can :read, Tutorial
+            # can :read, User
+            #can :manage, Tutorial, :user_id => user.id
+            #can :manage, Post, :user_id => user.id
+            #can :manage, Team, :creator => user.id
+            #can :read, Team
+            #can :edit, Team do |team|
+            #  team.try(:user) == user
+        #end
+             #Messages
+             #can :view, Message, :user_id => user.id
+             #can :view, Message, :sender_id => user.id
+        else
+           # can :read, Tutorial
+            #can :read, Team
     end
     # Define abilities for the passed in user here. For example:
     #
